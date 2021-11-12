@@ -53,9 +53,9 @@ export default function CreateAuctionHouseApp({ Component, pageProps }: AppProps
           style={mediaConfigurationStyles}
         > */}
 
-         <GlobalProvider> 
-            <Component {...pageProps} />
-          </GlobalProvider>
+        <GlobalProvider> 
+          <Component {...pageProps} />
+        </GlobalProvider>
 
         {/* </MediaConfiguration> */}
       </Web3ConfigProvider>

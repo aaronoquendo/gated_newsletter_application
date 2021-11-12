@@ -28,10 +28,10 @@ export default function Profile({ address }) {
       const postID = allPosts.medias[i].id;
 
       // FIXME: hardcoded fix for /dev/null lmao
-     // if (postID !== "2") {
-        const post = await getPostByID(allPosts.medias[i].id);
-        ownedMedia.push(post);
-     // }
+      // if (postID !== "2") {
+      const post = await getPostByID(allPosts.medias[i].id);
+      ownedMedia.push(post);
+      // }
     }
 
     setPosts([...ownedMedia.reverse()]); // Update owned posts (reversed for newest first)
@@ -39,20 +39,22 @@ export default function Profile({ address }) {
   };
 
   // Collect owned media on load
-  useEffect(collectOwnedMedia, [address]);
+  useEffect(() => {
+    collectOwnedMedia();
+  }, [address]);
 
   return (
     <Layout>
-      <Head/>
+      <Head />
 
       <div className="col-md-6 offset-md-3">
         <div className={styles.profile__head}>
           <img src={makeBlockie(address)} alt="Avatar" />
-           {address.toLowerCase()} 
-           <h2>Achievements and Certifications</h2>
+          {address.toLowerCase()}
+          <h2>Achievements and Certifications</h2>
         </div>
       </div>
-      
+
       {loading ? (
         // If loading state, show loading
         <div className={styles.profile__media_empty}>
@@ -61,7 +63,6 @@ export default function Profile({ address }) {
       ) : posts.length > 0 ? (
         // Else if, post count > 0
         <div className={styles.profile__media}>
-          
           {posts.map((post, i) => {
             // For each Zora post
             return (

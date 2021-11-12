@@ -21,6 +21,8 @@
     "@ethersproject/providers": "^5.4.5",
     "@superfluid-finance/js-sdk": "^0.5.3",
     "@truffle/contract": "^4.3.32",
+    "@unlock-protocol/unlock-express": "0.0.3",
+    "@unlock-protocol/unlock-js": "^0.20.4",
     "@walletconnect/web3-provider": "^1.6.5",
     "@zoralabs/core": "^1.0.5",
     "@zoralabs/manage-auction-hooks": "0.0.10",

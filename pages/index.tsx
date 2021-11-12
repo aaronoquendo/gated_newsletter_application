@@ -8,13 +8,13 @@ export default function Home() {
     <Layout>
       <div className={styles.container}>
         <Head>
-            <title>BeeHive Community</title>
+            <title>Newletter Website</title>
             <meta name="description" content="A Decentralized application" />
             <link rel="icon" href="/beehive.jpeg" />
         </Head>
         <main className={styles.main}>
             <h2 className={styles.title}>
-               <a href="http://localhost:3000">BeeHive - a community for public good</a>
+              <a href="http://localhost:3000">BeeHive - a community for public good</a>
             </h2>
             <p className={styles.description}>
               Build a community with funding for Impactful activities {' '}
