@@ -5,6 +5,13 @@ import { web3 } from "@containers/index"; // Web3 container
 import styles from "@styles/pages/Create.module.scss"; // Page styles
 import { useRouter } from "next/router"; // Router
 import Image from 'next/image';
+import useSWR from "swr";
+import { Fragment, useContext } from "react";
+
+import {
+  useWalletButton,
+  useWeb3Wallet,
+} from "@zoralabs/simple-wallet-provider";
 
 const configureUnlock = require('@unlock-protocol/unlock-express')
 
@@ -45,6 +52,51 @@ import Row from 'react-bootstrap/Row';
 
 
 export default function Newsletter() {
+  const { active,  account} = useWeb3Wallet();
+
+
+  const ConnectWallet = () => {
+    const { buttonAction, actionText, connectedInfo } = useWalletButton();
+  
+    return (
+      <div>
+        <h1>{`${
+          connectedInfo === undefined
+            ? "To List your NFT Connect your wallet!"
+            : connectedInfo
+        }`}</h1>
+        <button className="button" onClick={() => buttonAction()}>
+          {actionText}
+        </button>
+      </div>
+    );
+  };
+
+  const RenderOwnedList = ({ account }: { account: string }) => {
+    const { data, error } = useSWR(`/api/getNewsletter?owner=${account}`,
+      (url: string) => fetch(url).then((res) => res.json())
+    );
+  
+    if (!data) {
+      // loading
+      return <Fragment />;
+    }
+    if (error) {
+      // error
+      return <Fragment />;
+    }
+  
+    if (data) {
+      return (
+        <div className="owned-list-no-tokens">
+          <h2>We couldn’t find any NFTs you own 😢</h2>
+          <p>Make sure you’ve connected the correct wallet</p>
+        </div>
+      );
+    }
+  
+    console.log("data", data);
+  };
 
   const createMarket = async () => {
     console.log('Create Auction Market');
@@ -81,6 +133,13 @@ export default function Newsletter() {
           <p><strong>In this guide</strong>, we are going to review transferring, purchasing, and swapping assets with your Ledger device. Together, we’ll learn:</p>
 
           <ul><li><p>Adding assets to Ledger Live</p></li><li><p>Transferring assets from a crypto bank or exchange to your Ledger device</p></li><li><p>Purchasing assets with fiat using Coinify directly from Ledger Live</p></li><li><p>Swapping crypto assets using Changelly across multiple chains</p></li><li><p>Swapping Ethereum crypto assets using Paraswap</p></li></ul>
+          {console.log("account", account)}
+          <ConnectWallet />
+          {account &&
+            <div className="owned-list">
+              <RenderOwnedList account={account} />
+            </div>
+          }
 
           </Row>
         </Container>
