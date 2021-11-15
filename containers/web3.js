@@ -66,7 +66,7 @@ function useWeb3() {
 
     // Generate ethers provider
     const provider = new providers.Web3Provider(web3Provider);
-
+    console.log("provider", provider);
     // Collect signer
     const signer = provider.getSigner();
     // setSigner(signer);

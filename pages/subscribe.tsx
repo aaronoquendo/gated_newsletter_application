@@ -14,6 +14,33 @@ import {
   useWeb3Wallet,
 } from "@zoralabs/simple-wallet-provider";
 
+const configureUnlock = require("@unlock-protocol/unlock-express");
+
+// const { membersOnly } = configureUnlock(
+//   {
+//     yieldPaywallConfig: () => {
+//       return {
+//         locks: {
+//           '0xafa8fE6D93174D17D98E7A539A90a2EFBC0c0Fc1': {
+//             network: 4,
+//           },
+//         },
+//       }
+//     },
+//     getUserEthereumAddress: async (request) => {
+//       return request.cookies.userAddress
+//     },
+//     updateUserEthereumAddress: async (
+//       request,
+//       response,
+//       address,
+//     ) => {
+//       response.cookie('userAddress', address)
+//     },
+//   },
+//   app
+// )
+
 // React Bootstrap imports
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -36,6 +63,23 @@ export default function Newsletter() {
     };
     checkIfUserhasAccess();
   },[])
+
+  const ConnectWallet = () => {
+    const { buttonAction, actionText, connectedInfo } = useWalletButton();
+
+    return (
+      <div>
+        <h1>{`${
+          connectedInfo === undefined
+            ? "To List your NFT Connect your wallet!"
+            : connectedInfo
+        }`}</h1>
+        <button className="button" onClick={() => buttonAction()}>
+          {actionText}
+        </button>
+      </div>
+    );
+  };
 
   const newletterTitle = "Ultimate Guide To NFTs From Zero To Hero";
 
@@ -184,6 +228,8 @@ export default function Newsletter() {
                   <p>Swapping Ethereum crypto assets using Paraswap</p>
                 </li>
               </ul>
+              <ConnectWallet />
+
             </div>
           ): (()=> {
             if(!address){
