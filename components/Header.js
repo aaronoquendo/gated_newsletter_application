@@ -4,6 +4,16 @@ import { web3 } from "@containers/index"; // Global state
 import styles from "@styles/components/Header.module.scss"; // Component styles
 //import ENS, { getEnsAddress } from '@ensdomains/ensjs';
 
+import {
+  InputGroup,
+  FormControl,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  Button,
+} from "react-bootstrap";
+
 // Header
 export default function Header() {
   const [loading, setLoading] = useState(false); // Loading state
@@ -27,75 +37,34 @@ export default function Header() {
 
   return (
     <div className={styles.header}>
-      {/* Logo */}
-      <div className={styles.header__logo}>
-        <Link href="/">
-          <a>
-            <img src="/newletter_website_icon.png" alt="newletter website" />
-          </a>
-        </Link>
-      </div>
+      <Navbar className={styles.__navbar} bg="light" expand="lg">
+        <Navbar.Brand href="#home">
+          {" "}
+          <div className={styles.header__logo}>
+            <Link href="/">
+              <a>
+                <img
+                  src="/newletter_website_icon.png"
+                  alt="newletter website"
+                />
+              </a>
+            </Link>
+          </div>
+        </Navbar.Brand>
 
-      {/* Menu */}
-      <div className={styles.header__menu}>
+        <Form inline>
+          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+        </Form>
+        {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
+
         {address ? (
           // If user is authenticated
           <>
-            <Link href={`/profile/${address}`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>
-                    {ensName +
-                      " " +
-                      address.substr(0, 3) +
-                      "..." +
-                      address.slice(address.length - 3)}
-                  </b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/defi`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>GrowFund</b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/funding`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>Fund</b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/auction`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>BeeHive </b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/bio`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>Validate</b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/create`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>Reward</b>
-                </h6>
-              </a>
-            </Link>
-            <Link href={`/list`}>
-              <a className={styles.header__menu_button_black}>
-                <h6>
-                  <b>Awards</b>
-                </h6>
-              </a>
-            </Link>
+            <Nav className="">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link href="#link">Readers</Nav.Link>
+            </Nav>
           </>
         ) : (
           // Else if user is not authenticated
@@ -107,7 +76,7 @@ export default function Header() {
             {loading ? "Connecting..." : "Connect"}
           </button>
         )}
-      </div>
+      </Navbar>
     </div>
   );
 }
