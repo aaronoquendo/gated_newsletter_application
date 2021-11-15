@@ -1,0 +1,47 @@
+@import "../globals.scss";
+
+.__row {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.__mainContainer {
+}
+
+.__title {
+  display: inline-block;
+  max-width: 252px;
+  font-size: 1.625em;
+  text-align: center;
+}
+
+.__planBox {
+  display: flex;
+  flex-direction: column;
+  margin: 25px 10px;
+  padding: 15px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.__planBoxInner {
+  display: flex;
+  flex-direction: column;
+}
+
+.__formCheck {
+  margin-bottom: 10px;
+}
+
+.__subscribeButtonWrapper {
+  width: 100%;
+}
+
+.__subscribeButton {
+  width: 100%;
+  button {
+    background: $color1;
+    width: 100%;
+  }
+}
