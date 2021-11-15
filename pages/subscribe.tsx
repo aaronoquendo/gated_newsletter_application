@@ -117,8 +117,8 @@ export default function Newsletter() {
                 />
               </div>
             </div>
-            <div className={Subscribe.__subscribeButton}>
-              <Button variant="primary">Subscribe</Button>
+            <div className={Subscribe.__subscribeButtonWrapper}>
+              <Button className={Subscribe.__subscribeButton} variant="primary">Subscribe</Button>
             </div>
           </div>
         </Row>

@@ -2,10 +2,10 @@
 //   reactStrictMode: true,
 // }
 
-// BPS THIS WAS USED FOR WEBPACK 4. 
+// BPS THIS WAS USED FOR WEBPACK 4.
 // BPS I was trying to use webpack 4 for react-bootstrap package
 
-module.exports =  {
+module.exports = {
   // Force ignore fs client-side
   reactStrictMode: true,
   webpack5: false,
@@ -19,11 +19,11 @@ module.exports =  {
         //child_process: "empty"
       };
     }
-    
+
     // Return modified config
     return config;
   },
-} ;
-
-
-
+  images: {
+    domains: ["cdn.substack.com"],
+  },
+};
