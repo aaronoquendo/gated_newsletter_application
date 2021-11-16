@@ -59,13 +59,16 @@ export default function Header() {
 
         {address ? (
           // If user is authenticated
-          <>
+          <div>
             <Nav className="">
               <Nav.Link href="#home">Home</Nav.Link>
               <Nav.Link href="#link">Link</Nav.Link>
               <Nav.Link href="#link">Readers</Nav.Link>
             </Nav>
-          </>
+            <div className={``}>
+              CeramicId: 0xA7ECeb54421E7cBF3D22b7375a5E2B93a8f61359
+            </div>
+          </div>
         ) : (
           // Else if user is not authenticated
           <button
