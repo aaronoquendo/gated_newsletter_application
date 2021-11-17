@@ -14,6 +14,8 @@ const provider = new ethers.providers.JsonRpcProvider(networks["4"].provider);
 
 // Create a wallet.
 // This one should have a little bit of rinkeby eth but please send more if you use it!
+
+// Brahma WILL UPDATED THIS WALLET TO USE THE WALLET FROM THE FRONTEND
 const wallet = new ethers.Wallet.fromMnemonic(
   "deliver maximum helmet soccer elevator various guide swift motor awful weapon transfer",
   "m/44'/60'/0'/0/1"
@@ -23,6 +25,10 @@ const signer = wallet.connect(provider);
 
 const recipient = "0xA7ECeb54421E7cBF3D22b7375a5E2B93a8f61359";
 
+// This is the lock for the newsletter
+let lockAddress = "0x259Fa13a7A8CB437744D38D70018C4CeA6E6c5D8";
+
+// This function is used to check if a user has hasAccess to a newsletter (a lock)
 const doesUserHaveAccessToLock = async (recipient) => {
   const walletService = new WalletService(networks);
 
@@ -30,12 +36,11 @@ const doesUserHaveAccessToLock = async (recipient) => {
   await walletService.connect(provider, signer);
 
   try {
-    const lockAddress = "0x259Fa13a7A8CB437744D38D70018C4CeA6E6c5D8";
     console.log("recipient", recipient);
     // const recipient = recipients.pop();
 
     if (!recipient) {
-      return;
+      return false;
     }
 
     const web3Service = new Web3Service(networks);
@@ -64,7 +69,6 @@ const doesUserHaveAccessToLock = async (recipient) => {
 
 const grantNextKey = async (walletService, recipients, done) => {
   try {
-    const lockAddress = "0x259Fa13a7A8CB437744D38D70018C4CeA6E6c5D8";
     const recipient = recipients.pop();
     if (!recipient) {
       return done();
@@ -128,8 +132,6 @@ async function grantUserKey(req, res) {
 
 // doesUserHaveAccessToLock();
 // grantUserKey();
-
-// export default handler;
 
 module.exports = async (req, res) => {
   console.log("hello");

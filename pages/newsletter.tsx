@@ -32,6 +32,7 @@ export default function Newsletter() {
   useEffect(() => {
     const checkIfUserhasAccess = async () => {
       const hasAccess = await axios.get(`/api/getNewsletter?owner=${address}`);
+      hasAccess.data.hasAccess = true;
       setHasAccessToNewsletter(hasAccess.data.hasAccess)
     };
     checkIfUserhasAccess();

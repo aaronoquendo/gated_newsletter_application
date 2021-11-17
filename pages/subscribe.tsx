@@ -55,7 +55,7 @@ export default function Newsletter() {
   const { active, account } = useWeb3Wallet();
   const { address, authenticate, mintMedia } = web3.useContainer();
   const [hasAccessToNewsletter, setHasAccessToNewsletter] = useState(false);
-
+  const router = useRouter();
   // Use to render content if userHasAccess to this newsletter
   useEffect(() => {
     const checkIfUserhasAccess = async () => {
@@ -118,7 +118,7 @@ export default function Newsletter() {
               </div>
             </div>
             <div className={Subscribe.__subscribeButtonWrapper}>
-              <Button className={Subscribe.__subscribeButton} variant="primary">Subscribe</Button>
+              <Button className={Subscribe.__subscribeButton} variant="primary" onClick={() => router.push(`/newsletter`)}>Subscribe</Button>
             </div>
           </div>
         </Row>

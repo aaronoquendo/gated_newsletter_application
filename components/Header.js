@@ -1,5 +1,5 @@
 import Link from "next/link"; // Dynamic routing
-import { useState } from "react"; // State management
+import { useEffect, useState } from "react"; // State management
 import { web3 } from "@containers/index"; // Global state
 import styles from "@styles/components/Header.module.scss"; // Component styles
 //import ENS, { getEnsAddress } from '@ensdomains/ensjs';
@@ -43,10 +43,7 @@ export default function Header() {
           <div className={styles.header__logo}>
             <Link href="/">
               <a>
-                <img
-                  src="/newletter_website_icon.png"
-                  alt="newletter website"
-                />
+                <img src="/the-kurious.png" alt="newletter website" />
               </a>
             </Link>
           </div>
@@ -65,9 +62,8 @@ export default function Header() {
               <Nav.Link href="#link">Link</Nav.Link>
               <Nav.Link href="#link">Readers</Nav.Link>
             </Nav>
-            <div className={``}>
-              CeramicId: 0xA7ECeb54421E7cBF3D22b7375a5E2B93a8f61359
-            </div>
+            <div className={``}>WalletAddress: {address}</div>
+            {/* <div className={``}>CeremicAddress: {address}</div> */}
           </div>
         ) : (
           // Else if user is not authenticated

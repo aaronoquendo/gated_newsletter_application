@@ -15,7 +15,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider"; // WalletConne
 
 import CommunityDAOABI from "../auction-house/artifacts/contracts/CommunityDAO.sol/CommunityDAO.json";
 import communityDAOAddress from "../auction-house/contract_address.json";
-
+console.log("process.env.INFURA_ID", process.env.INFURA_ID);
 // Web3Modal provider options --set for RINKEBY
 const providerOptions = {
   walletconnect: {
