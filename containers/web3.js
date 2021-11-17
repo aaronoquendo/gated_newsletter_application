@@ -13,8 +13,22 @@ import { useState, useEffect } from "react"; // State management
 import { createContainer } from "unstated-next"; // Unstated-next containerization
 import WalletConnectProvider from "@walletconnect/web3-provider"; // WalletConnectProvider (Web3Modal)
 
-import CommunityDAOABI from "../auction-house/artifacts/contracts/CommunityDAO.sol/CommunityDAO.json";
-import communityDAOAddress from "../auction-house/contract_address.json";
+//Ceramic imports
+import CeramicClient from '@ceramicnetwork/http-client';
+import KeyDidResolver from 'key-did-resolver';
+import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver';
+import { DID } from 'dids';
+
+//3ID connect imports
+import { ThreeIdConnect, EthereumAuthProvider } from '@3id/connect';
+//Document creation imports
+import { TileDocument } from '@ceramicnetwork/stream-tile';
+
+//IDX
+import { IDX } from '@ceramicstudio/idx';
+
+//import CommunityDAOABI from "../auction-house/artifacts/contracts/CommunityDAO.sol/CommunityDAO.json";
+//import communityDAOAddress from "../auction-house/contract_address.json";
 
 // Web3Modal provider options --set for RINKEBY
 const providerOptions = {
@@ -33,6 +47,10 @@ function useWeb3() {
   const [address, setAddress] = useState(null); //ETH address
   const [web3Provider, setWeb3Provider] = useState(null);
   const [ensName, setEnsName] = useState(".eth");
+
+  const [ceramic, setCeramic] = useState(null);
+  const [userIDX, setUserIDX] = useState(null);
+  const [userDID, setUserDID] = useState('');
 
   const nftPortKey = "73fe9e20-7dd1-41cd-9277-508639f27126";
 
@@ -78,21 +96,54 @@ function useWeb3() {
     const ensName = await provider.lookupAddress(address);
     setEnsName(ensName);
     console.log("ENS Name:" + ensName);
-
+    
     //Get DAO contract
-    const communityDAOContract = new ethers.Contract(
-      communityDAOAddress.CommunityDAOContractAddress,
-      CommunityDAOABI.abi,
-      provider.getSigner(0)
-    );
-    setCommunityDAOContract(communityDAOContract);
-    const result = await communityDAOContract.getCommunityName();
-    console.log("DAO name after contract call:" + result);
+    // const communityDAOContract = new ethers.Contract(
+    //   communityDAOAddress.CommunityDAOContractAddress,
+    //   CommunityDAOABI.abi,
+    //   provider.getSigner(0)
+    // );
+    // setCommunityDAOContract(communityDAOContract);
+    // const result = await communityDAOContract.getCommunityName();
+    // console.log("DAO name after contract call:" + result);
+
+    try {
+      const API_URL = 'https://ceramic-clay.3boxlabs.com';
+      const ceramic = new CeramicClient(API_URL);
+      setCeramic(ceramic);
+
+      const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) }
+      const did = new DID({ resolver });
+      ceramic.did = did;
+      
+      const threeIdConnect = new ThreeIdConnect();
+      const authProvider = new EthereumAuthProvider(web3Provider, address);
+      await threeIdConnect.connect(authProvider);
+
+      const didProvider = await threeIdConnect.getDidProvider()
+      ceramic.did.setProvider(didProvider);
+      await ceramic.did.authenticate();
+      console.log("After ceramic.did.authenticate()")
+    
+      //set user IDX
+      const userIDX = new IDX({ ceramic })
+      setUserIDX(userIDX);
+
+      const userDID = userIDX.id
+      setUserDID(userDID);
+    } catch {
+       setUserDID(address);
+    }
+    
+
+
 
     // Generate Zora provider
     const zora = new Zora(signer, 4);
     setZora(zora);
   };
+
+  
 
   /**
    * Converts File to an ArrayBuffer for hashing preperation
@@ -184,6 +235,7 @@ function useWeb3() {
     ensName,
     authenticate,
     mintMedia,
+    userDID,
   };
 }
 

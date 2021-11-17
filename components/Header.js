@@ -17,7 +17,7 @@ import {
 // Header
 export default function Header() {
   const [loading, setLoading] = useState(false); // Loading state
-  const { address, ensName, web3Provider, authenticate } = web3.useContainer(); // Global state
+  const { address, ensName, web3Provider, authenticate, userDID } = web3.useContainer(); // Global state
 
   const authenticateWithLoading = async () => {
     setLoading(true); // Toggle loading
@@ -66,7 +66,7 @@ export default function Header() {
               <Nav.Link href="#link">Readers</Nav.Link>
             </Nav>
             <div className={``}>
-              CeramicId: 0xA7ECeb54421E7cBF3D22b7375a5E2B93a8f61359
+              Digial Id: {userDID}
             </div>
           </div>
         ) : (

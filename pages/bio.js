@@ -57,9 +57,6 @@ export default function bio() {
   // }, [] );
 
   const IDConnect = async () => {
-
-    //const API_URL = "https://localhost:7007";
-
     const API_URL = 'https://ceramic-clay.3boxlabs.com';
     const ceramic = new CeramicClient(API_URL);
     setCeramic(ceramic);
@@ -92,7 +89,6 @@ export default function bio() {
       setApproval(profile.description.split('|')[0]);
       setRating(profile.description.split('|')[1]);
     }
-
   }
 
   const createProfile = async () => {
