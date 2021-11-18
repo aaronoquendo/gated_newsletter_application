@@ -164,7 +164,7 @@ export default function funding() {
                   <div className={styles.create__grid}>
                     {/* Creation form */}
                     <div className={styles.create__grid_left}>
-                      <h2>Funding for Public Good</h2>
+                      <h2>Subscription Payment</h2>
                       <br/>
                       <label htmlFor="fundingRecipient">Enter funding Recipient: </label>  &nbsp;&nbsp;
                       <input
@@ -236,16 +236,16 @@ export default function funding() {
 
               <div>
                   <button onClick={startFlow} className="btn btn-outline-warning">
-                    Start Funding
+                    Pay Now
                   </button> &nbsp;&nbsp;
                   <button onClick={stopFlow} className="btn btn-outline-warning">
-                    Stop Funding
+                    Stop Payment
                   </button> &nbsp;&nbsp;
                   <button onClick={getSubscribers} className="btn btn-outline-warning">
-                    Get All Recipients
+                    show All Recipients
                   </button>
                   <button onClick={showRewards} className="btn btn-outline-warning">
-                    Show Rewards
+                    Show payments
                   </button>
               </div>
 

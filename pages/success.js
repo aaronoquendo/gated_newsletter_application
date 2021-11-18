@@ -17,7 +17,7 @@ export default function Success() {
         <p>You should see it on Home and in your Profile soon!</p>
 
         {/* Redirect to home Profile */}
-        <Link href={'/list'}>
+        <Link href={'/'}>
           <a>Back Home</a>
         </Link>
       </div>

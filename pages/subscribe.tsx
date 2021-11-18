@@ -52,6 +52,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 export default function Newsletter() {
+  const router = useRouter();
   const { active, account } = useWeb3Wallet();
   const { address, authenticate, mintMedia } = web3.useContainer();
   const [hasAccessToNewsletter, setHasAccessToNewsletter] = useState(false);
@@ -118,7 +119,7 @@ export default function Newsletter() {
               </div>
             </div>
             <div className={Subscribe.__subscribeButtonWrapper}>
-              <Button className={Subscribe.__subscribeButton} variant="primary">Subscribe</Button>
+              <Button className={Subscribe.__subscribeButton} variant="primary"onClick={() => router.push(`/list`)}>Subscribe</Button>
             </div>
           </div>
         </Row>
