@@ -106,36 +106,35 @@ function useWeb3() {
     // setCommunityDAOContract(communityDAOContract);
     // const result = await communityDAOContract.getCommunityName();
     // console.log("DAO name after contract call:" + result);
+    if(!userDID) {
+      try {
+        const API_URL = 'https://ceramic-clay.3boxlabs.com';
+        const ceramic = new CeramicClient(API_URL);
+        setCeramic(ceramic);
 
-    try {
-      const API_URL = 'https://ceramic-clay.3boxlabs.com';
-      const ceramic = new CeramicClient(API_URL);
-      setCeramic(ceramic);
+        const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) }
+        const did = new DID({ resolver });
+        ceramic.did = did;
+        
+        const threeIdConnect = new ThreeIdConnect();
+        const authProvider = new EthereumAuthProvider(web3Provider, address);
+        await threeIdConnect.connect(authProvider);
 
-      const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) }
-      const did = new DID({ resolver });
-      ceramic.did = did;
+        const didProvider = await threeIdConnect.getDidProvider()
+        ceramic.did.setProvider(didProvider);
+        await ceramic.did.authenticate();
+        console.log("After ceramic.did.authenticate()")
       
-      const threeIdConnect = new ThreeIdConnect();
-      const authProvider = new EthereumAuthProvider(web3Provider, address);
-      await threeIdConnect.connect(authProvider);
+        //set user IDX
+        const userIDX = new IDX({ ceramic })
+        setUserIDX(userIDX);
 
-      const didProvider = await threeIdConnect.getDidProvider()
-      ceramic.did.setProvider(didProvider);
-      await ceramic.did.authenticate();
-      console.log("After ceramic.did.authenticate()")
-    
-      //set user IDX
-      const userIDX = new IDX({ ceramic })
-      setUserIDX(userIDX);
-
-      const userDID = userIDX.id
-      setUserDID(userDID);
-    } catch {
-       setUserDID(address);
+        const userDID = userIDX.id
+        setUserDID(userDID);
+      } catch {
+        setUserDID(address);
+      }
     }
-    
-
 
 
     // Generate Zora provider

@@ -27,7 +27,7 @@ export default function Home() {
         </div>
 
         <div className={Homepage.__startWritingButton}>
-          <Button variant="primary">Start writing</Button>
+          <Button variant="primary" onClick={() => router.push(`/create`)}>Upload content</Button>
         </div>
 
         <div className="main-section" style={{ width: "100%" }}>
